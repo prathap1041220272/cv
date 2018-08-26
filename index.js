@@ -1,12 +1,17 @@
-const express = require('express');
-const app =express();
-const nodemailer = require('nodemailer');
-const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({extended:true}));
-app.use(bodyParser.json());
-app.use(express.static('public'));
+const express = require('express')
+const path = require('path')
+  const nodemailer = require('nodemailer')
+const bodyParser = require('body-parser')
+const PORT = process.env.PORT || 5000
+
+const app= express()
+app.use(express.static(path.join(__dirname, 'public')))
+app.get('/', (req, res) => res.render('pages/index'))
+
+app.use(bodyParser.urlencoded({extended:true}))
+app.use(bodyParser.json())
 app.post('/sample',(req,res)=>{
-    const {name,email,title,message}= req.body;
+    const {name,email,title,message}= req.body
 var transporter = nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
@@ -15,7 +20,7 @@ var transporter = nodemailer.createTransport({
         user: 'sivaprathap.konduru@gmail.com',
         pass: 'siva4568'
     }
-});
+})
 
 var mailOptions = {
     from: `${email}`,
@@ -23,15 +28,15 @@ var mailOptions = {
     subject: `${title}`,
     text: `${email},${name}  and ${message}`,
     html: `<p><b>email:- </b>${email} ,<b>name:- </b>${name} , <b>title:- </b>${title} ,<b>message:- </b> ${message}</p>`
-};
+}
 
 transporter.sendMail(mailOptions, function(error, info) {
     if (error) {
-        console.log(error);
+        console.log(error)
     } else {
-        console.log('Message sent: ' + info.response);
+        console.log('Message sent: ' + info.response)
     }
-    transporter.close();
-});
+    transporter.close()
 })
-app.listen(200,()=>{console.log('hsh')})
+})
+  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
