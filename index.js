@@ -17,8 +17,8 @@ var transporter = nodemailer.createTransport({
     port: 465,
     secure: true,
     auth: {
-        user: 'sivaprathap.konduru@gmail.com',
-        pass: 'siva4568'
+        user: 'insearchlooks@gmail.com',
+        pass: 'prathap4568'
     }
 })
 
@@ -38,5 +38,6 @@ transporter.sendMail(mailOptions, function(error, info) {
     }
     transporter.close()
 })
+res.send('<h1><b>submited the details</b></h1><br><button onclick="goBack()">Go Back</button>')
 })
   .listen(PORT, () => console.log(`Listening on ${ PORT }`))
